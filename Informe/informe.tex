@@ -1,0 +1,144 @@
+\documentclass{article}
+
+% Paquetes adicionales para mejorar el diseño y las fuentes
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{lipsum}
+\usepackage{tikz}
+\usepackage{float}
+
+% Configuración de encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage}
+
+% Configuración de colores personalizados
+\definecolor{keywordcolor}{RGB}{0,0,128}
+\definecolor{stringcolor}{RGB}{0,128,0}
+\definecolor{commentcolor}{RGB}{128,128,128}
+\definecolor{backgroundcolor}{RGB}{245,245,245}
+\definecolor{graphcolor}{RGB}{0,128,128}
+
+% Estilo personalizado para mostrar código
+\lstset{
+  backgroundcolor=\color{backgroundcolor},
+  basicstyle=\footnotesize\ttfamily,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  commentstyle=\color{commentcolor},
+  extendedchars=true,
+  frame=single,
+  keywordstyle=\color{keywordcolor},
+  language=TeX,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\tiny\color{gray},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  stringstyle=\color{stringcolor},
+  tabsize=2,
+  title=\lstname
+}
+
+\begin{document}
+
+\title{\textcolor{graphcolor}{\textbf{\Huge{Moogle!}}}}
+\author{\LARGE{\textcolor{graphcolor}{Arián Alí Llanes Morales - C111}}}
+
+\maketitle
+
+\newpage
+
+\begin{center}
+\section*{\textcolor{graphcolor}{{\centering ¿Qué es Moogle?}}}
+
+Moogle! es un motor de búsqueda que funciona sobre una base 
+de datos de archivos de textos (.txt) y que utiliza algoritmos Term Frequency (TF) 
+y de Inverse Document Frequency (IDF) y otros métodos del álgebra lineal para realizar búsquedas
+ de forma rápida y eficiente entre un conjunto de documentos.
+
+\section*{\textcolor{graphcolor}{{\centering ¿Cómo se ejecuta?}}}
+
+	En la carpeta Script el usuario encontrará un script de bash que facilitará la interacción con el proyecto
+a partir de los comandos expuestos a continuación:
+\\run - Para compilar y ejecutar el proyecto.
+\\report - Para compilar y generar el latex del informe.
+\\slides - Para compilar y generar el latex de la presentación.
+\\show-report - Para comprobar que esté creado el pdf del informe, y en caso contrario, ejecutar el comando report.
+\\show-slides - Para comprobar que esté creado el pdf de la presentacion, y en caso contrario, ejecutar el comando slides.
+\\clean - Limpia el contenido desechable en las carpetas Presentacion e Informe.     
+
+
+\newpage
+
+\section*{\textcolor{graphcolor}{{\centering ¿Cómo Funciona?}}}
+
+Moogle tiene como objetivo central realizar búsquedas entre varios archivos de texto, accediendo a su contenido y mostrando como resultado aquellos documentos que tengan una mayor relevancia o parecido con los términos de la búsqueda del usuario. Los documentos entre los que se desea realizar la búsquedas deben ser copiados a la carpeta Content. Nótese que el proyecto solo realiza búsquedas entre archivos de texto (.txt), la introducción de documentos de texto de otro formato no afectarán el funcionamiento de la aplicación pero estos no serán tomados en cuenta en el proceso de búsqueda. No hay Límite para la cantidad de documentos a procesar, la búsqueda se realizará sin problemas para cualquier número de documentos aunque una mayor cantidad de estos podría aumentar de forma mínima y casi imperceptible el proceso de carga en la primera búsqueda (vease la sección "Problemas Frecuentes" del documento de presentación).
+
+
+\newpage
+\section*{\textcolor{graphcolor}{{\centering Algoritmo TF-IDF}}}
+\addcontentsline{toc}{subsection}{Detalles de la búsqueda}
+
+La fórmula de TFxIDF se utiliza para calcular la relevancia de una palabra en un conjunto de documentos y en cuales es más relevante.
+\begin{equation}
+	TFxIDF = (\frac{tf}{tw}) \times \log(\frac{td}{dt})
+\end{equation}
+
+\begin{itemize}
+	\item $tf$ = frecuencia del término en el documento.
+	\item $tw$ = cantidad de palabras en el documento.
+	\item $td$ = cantidad de documentos.
+	\item $dt$ = cantidad de documentos que contienen el término.
+\end{itemize}
+
+
+Después de esto es necesario calcular la semejanza entre el vector {\it document} y el vector {\it query}, para esto se utiliza la f'ormula de {\it similitud del coseno}. Esta nos permite calcular el ángulo entre dos vectores, que representan el {\it documento} y {\it la consulta} utilizando la siguiente fórmula:
+
+\begin{equation}
+	\cos \alpha = \frac{v_d \cdot v_q}{||v_d|| ~ ||v_q||}
+\end{equation}
+
+
+\begin{itemize}
+	\item $v_d$ = vector {\it document}
+	\item $v_q$ = vector {\it query}
+	\item $||v||$ = magnitud del vector $v$
+\end{itemize}
+
+
+
+\newpage
+
+\section*{\textcolor{graphcolor}{{\centering Sobre el código y las clases de Moogle!}}}
+
+\section*{\textcolor{graphcolor}{{\centering Clase TxtProcessing}}}
+
+Esta clase es la encargada,  como indica su nombre indica, de cargar y procesar los archivos de textos presentes en la carpeta Content. 
+La clase filtra los archivos en la ruta dada y extrae únicamente los archivos de texto (.txt). Luego almacena los títulos de estos documentos y su contenido en un diccionario. Luego procesa el contenido de los documentos separandolos por palabras, obteniendo así un array con todas las palabras existentes en la base de datos (sin repetir) y un diccionario bidimensional que asigna a cada documento la cantidad de veces que aparece cada palabra de la lista en este. 
+
+\section*{\textcolor{graphcolor}{{\centering Clase TFxIDF}}}
+
+Esta clase cuenta con métodos para calcular los valores de TFxIDF de las palabras en los documentos de la base de datos, así como para realizar estas acciones también en el query introducido por el usario. También se encuentra implementado un método que halla la semejanza del query con los distintos documentos a partir de la fórmula de similitud del coseno y los almacena en un diccionario que asigna a cada documento el resultado de calcular su similitud del coseno con el query.
+
+
+\section*{\textcolor{graphcolor}{{\centering Clase SearchResult}}}
+Esta clase es la encargada de representar los resultados de la búsqueda. Crea un array de objetos obtenidos en la clase SearchItem y una sugerencia adecuada para la búsqueda realizada.
+
+\section*{\textcolor{graphcolor}{{\centering Clase SearchItem}}}
+Esta clase es la encargada de representar a los distintos elementos de búsqueda. Almacena el título del documento, un fragmento del mismo relativo al query y el Score obtenido del calculo de la similitud del coseno.
+
+
+\section*{\textcolor{graphcolor}{{\centering Clase Moogle}}}
+Esta clase es la encargada de cargar la base de datos y devolver los resultados de la búsqueda. Se utiliza la clase TxtProcessing para cargar los documentos y la clase TFxIDF para calcular la semejanza entre el query y los documentos. Devuelve el nombre de cada documento con su respectivo Score y Snippet.
+ Además contiene un método para procesar el query introducido por el usuario, realizar la búsqueda y devolverla como un array de objetos SearchResult.
+
+
+\end{center}
+\end{document}

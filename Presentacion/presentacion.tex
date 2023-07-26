@@ -1,0 +1,104 @@
+\documentclass{beamer}
+\usetheme{default}
+\usecolortheme{beaver}
+
+\usepackage{xcolor}
+\usepackage{amsmath, amssymb, amsfonts, amsthm, amssymb}
+\usepackage{url, hyperref}
+\usepackage{tikz}
+
+
+
+% Usar plantilla en español.
+\usepackage[spanish]{babel}
+
+% Agregar citas bibliográficas
+\usepackage{cite}
+
+% Poner código fuente en latex
+\usepackage{listings}
+\usepackage{color}
+
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{bookmark}
+\usepackage{makecell}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{graphicx}
+
+
+\usepackage{beamerthemesplit}
+
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+
+
+% Configuración de colores personalizados
+\definecolor{keywordcolor}{RGB}{0,0,128}
+\definecolor{stringcolor}{RGB}{0,128,0}
+\definecolor{commentcolor}{RGB}{128,128,128}
+\definecolor{backgroundcolor}{RGB}{245,245,245}
+\definecolor{graphcolor}{RGB}{0,128,128}
+
+\title[Moogle!]{\LARGE Moogle!}
+\author{Arián Alí Llanes Morales}
+\institute[Universidad de La Habana]
+{
+  Matcom
+}
+\date{\today}
+
+\begin{document}
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\section{Introducción}
+
+\begin{frame}{¿Qué es Moogle?}
+  
+  \textbf{Moogle!}Moogle! es un motor de búsqueda que funciona sobre una base 
+de datos de archivos de textos (.txt) y que utiliza algoritmos Term Frequency (TF) 
+y de Inverse Document Frequency (IDF) y otros métodos del álgebra lineal para realizar búsquedas
+ de forma rápida y eficiente entre un conjunto de documentos.
+
+
+\end{frame}
+
+\begin{frame}{Acerca de su desarrollo}
+  Es una aplicación web, desarrollada con {\tt .NET Core 6.0}, 
+  utilizando Blazor como {\it framework} web para la interfaz gráfica, yl
+ utilizando el lenguaje de programación {\tt C\#}. \\
+\end{frame}
+
+
+\subsection*{Sobre su uso óptimo}
+
+\begin{frame}{Uso del script para mayor comodidad del usuario}
+    \begin{center}
+	En la carpeta Script el usuario encontrará un script de bash que facilitará la interacción con el proyecto
+a partir de los comandos expuestos a continuación:
+\\run - Para compilar y ejecutar el proyecto.
+\\report - Para compilar y generar el latex del informe.
+\\slides - Para compilar y generar el latex de la presentación.
+\\show-report - Para comprobar que esté creado el pdf del informe, y en caso contrario, ejecutar el comando report.
+\\show-slides - Para comprobar que esté creado el pdf de la presentacion, y en caso contrario, ejecutar el comando slides.
+\\clean - Limpia el contenido desechable en las carpetas Presentacion e Informe.     
+    \end{center}
+\end{frame}
+
+
+
+\section{Problemas frecuentes}
+
+\begin{frame}{Consideraciones sobre el tiempo de carga}
+   La primera búsqueda realizada tiende a ser más lenta que las siguientes, debido
+a que es en esta primera búsqueda donde el programa carga la base de datos, proceso que toma
+algunos segundos. Debido a ciertas estructuras del código las búsquedas podrían ver su tiempo de duracion aumentado
+de forma directamente proporcional a la cantidad de palabras en el query (término de la búsqueda). De cualquier manera
+estas situaciones deberían ser mínimas y casi imperceptibles para el usuario.
+
+
+\end{document}
